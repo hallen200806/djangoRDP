@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>权限编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+{#    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />#}
+    <link rel="stylesheet" href="{% static 'css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'css/xadmin.css' %}">
+    <script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/layui/layui.js' %}" charset="utf-8"></script>
+    <script type="text/javascript" src="{% static 'js/xadmin.js' %}"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+      <link rel="stylesheet" href="{% static 'sweetalert/sweetalert.css' %}">
+      <script src="{% static 'sweetalert/sweetalert.min.js' %}"></script>
+      <script src="{% static 'sweetalert/xtalert.js' %}"></script>
+  </head>
+  
+  <body>
+    <div class="x-body">
+          <div class="layui-form-item">
+              <label class="layui-form-label"><span class="x-red">*</span>上级权限</label>
+              <div class="layui-input-inline">
+                  <select name="role_parent_id_edit" id="role_parent_id_edit" class="layui-input">
+                      {% if parent_name %}
+                          <option value="{{ parent_id }}">{{ parent_name }}</option>
+                      {% else %}
+                          <option value="0">--请选择--</option>
+                      {% endif %}
+                      {% for permissions in permissions_list %}
+                          <option value="{{ permissions.id }}">{{ permissions.name }}</option>
+                      {% endfor %}
+
+                  </select>
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>无上级权限请留空
+              </div>
+          </div>
+
+          <div class="layui-form-item">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>权限名称
+              </label>
+              <div class="layui-input-inline">
+                  <input value="{{ name }}" type="text" id="role_name_edit" name="role_name_edit" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>唯一
+              </div>
+          </div>
+
+          <div class="layui-form-item">
+              <label for="L_email" class="layui-form-label">
+                  <span class="x-red">*</span>URL名称
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" value="{{ url }}" id="role_url_edit" name="role_url_edit" required=""
+                  autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>唯一
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label"><span class="x-red">*</span>请求方法</label>
+              <div class="layui-input-inline">
+                  <select name="role_method_edit" id="role_method_edit" class="layui-input">
+                      {% if per_method == 1 %}
+                          <option value="1">GET</option>
+                          <option value="2">POST</option>
+                      {% endif %}
+                      {% if per_method == 2 %}
+                          <option value="2">POST</option>
+                          <option value="1">GET</option>
+                      {% endif %}
+                  </select>
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_pass" class="layui-form-label">
+                  <span class="x-red">*</span>参数列表
+              </label>
+              <div class="layui-input-inline">
+                  <input value="{{ argument_list }}" type="text" id="role_arguments_edit" name="role_arguments_edit" autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>多个参数名之间用英文逗号隔开
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_repass" class="layui-form-label">
+                  <span class="x-red">*</span>描述
+              </label>
+              <div class="layui-input-inline">
+                  <input value="{{ describe }}" type="text" id="role_desc_edit" name="role_desc_edit" autocomplete="off" class="layui-input">
+              </div>
+          </div>
+
+          <div class="layui-form-item">
+              <label class="layui-form-label"><span class="x-red">*</span>是否启用</label>
+              <div class="layui-input-inline">
+                {% if is_active == 0 %}
+                      <input type="radio" name="is_active" id="is_active_1_edit" lay-skin="primary" title="启用" value="1">启用
+                      <input type="radio" name="is_active" id="is_active_0_edit" lay-skin="primary" title="停用" value="0" checked="" >停用
+                  {% endif %}
+                   {% if is_active == 1 %}
+                      <input type="radio" name="is_active" id="is_active_1_edit" lay-skin="primary" title="启用" value="1" checked="">启用
+                      <input type="radio" name="is_active" id="is_active_0_edit" lay-skin="primary" title="停用" value="0">停用
+                  {% endif %}
+              </div>
+          </div>
+
+          <div class="layui-form-item">
+              <button  class="layui-btn" id="auth_edit_btn">
+                  提交
+              </button>
+              <input type="hidden" id="id_edit" value="{{ id }}">
+          </div>
+    </div>
+
+    <script src="{% static 'js/host.js' %}"></script>
+    <script src="{% static 'js/auth-edit.js' %}"></script>
+  </body>
+
+</html>

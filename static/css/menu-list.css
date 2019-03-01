@@ -1,0 +1,17 @@
+.tab-left{
+    float: left;
+    display: inline-block;
+    width: 15%;
+    /*height: 300px;*/
+    margin: 10px 0 5%;
+    /*margin-right: 5%;*/
+    /*border: 1px solid red;*/
+}
+.tab-right{
+    width: calc(100% - 15% - 5% - 4px);
+    float: left;
+    /*border: 1px solid blue;*/
+    display: inline-block;
+}
+
+

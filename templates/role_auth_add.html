@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>权限配置</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+{#    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />#}
+    <link rel="stylesheet" href="{% static 'css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'css/xadmin.css' %}">
+{#    <script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>#}
+{#    <script type="text/javascript" src="{% static 'lib/layui/layui.js' %}" charset="utf-8"></script>#}
+    <script type="text/javascript" src="{% static 'js/xadmin.js' %}"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+      <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+      <link rel="stylesheet" href="{% static 'sweetalert/sweetalert.css' %}">
+      <script src="{% static 'sweetalert/sweetalert.min.js' %}"></script>
+      <script src="{% static 'sweetalert/xtalert.js' %}"></script>
+      <link rel="stylesheet" href="{% static 'css/iconfont.css' %}">
+
+
+      <link rel="stylesheet" href="{% static 'css/bootstrapStyle.css' %}" type="text/css">
+
+
+    <script type="text/javascript" src="{% static 'js/jquery.ztree.core.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.ztree.excheck.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.ztree.exedit.js' %}"></script>
+  </head>
+  
+  <body>
+    <div class="x-body">
+          <div class="layui-form-item">
+              <label for="role_name" class="layui-form-label">
+                  <span class="x-red">*</span>角色名称
+              </label>
+              <div class="layui-input-inline">
+                  <input value="{{ role_name }}" type="text" id="role_name_edit" name="role_name_edit" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input" readonly="readonly">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>唯一
+              </div>
+          </div>
+
+
+          <div class="layui-form-item">
+              <label for="role_desc" class="layui-form-label">
+                  <span class="x-red">*</span>角色描述
+              </label>
+              <div class="layui-input-inline">
+                  <input value="{{ desc }}" type="text" id="role_desc_edit" name="role_desc_edit" required="" lay-verify="email"
+                  autocomplete="off" class="layui-input" readonly="readonly">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>
+              </div>
+          </div>
+
+          <div class="layui-form-item">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>添加权限
+              </label>
+              <div class="layui-input-inline">
+                    {#权限树#}
+{#                  <input type="text">#}
+                  <ul id="treeDemo" class="ztree">
+                      {% comment %}<li id="treeDemo_1" class="level0" tabindex="0" hidefocus="true" treenode="">
+                          <span id="treeDemo_1_switch" title="" class="button level0 switch roots_open" treenode_switch=""></span>
+                          <input type="hidden" class="auth_id" value="22">
+                          <span id="treeDemo_1_check" class="button chk checkbox_false_full" treenode_check=""></span>
+                          <a id="treeDemo_1_a" class="level0" treenode_a="" onclick="" target="_blank" style="" title=" 权限管理">
+                              <span id="treeDemo_1_ico" title="" treenode_ico="" class="button ico_open" style=""></span>
+                              <span id="treeDemo_1_span" class="node_name"> 权限管理</span>
+                          </a>
+                          <ul id="treeDemo_1_ul" class="level0 line" style="">
+                              <li id="treeDemo_2" class="level1" tabindex="0" hidefocus="true" treenode="">
+                                  <span id="treeDemo_2_switch" title="" class="button level1 switch center_docu" treenode_switch=""></span>
+                                  <input type="hidden" class="auth_id" value="12"> <span id="treeDemo_2_check" class="button chk checkbox_false_full" treenode_check=""></span>
+                                  <a id="treeDemo_2_a" class="level1" treenode_a="" onclick="" target="_blank" style="" title="权限列表">
+                                      <span id="treeDemo_2_ico" title="" treenode_ico="" class="button ico_docu" style=""></span>
+                                      <span id="treeDemo_2_span" class="node_name">权限列表</span>
+                                  </a>
+                              </li>
+                              <li id="treeDemo_3" class="level1" tabindex="0" hidefocus="true" treenode="">
+                                  <span id="treeDemo_3_switch" title="" class="button level1 switch center_docu" treenode_switch=""></span>
+                                  <input type="hidden" class="auth_id" value="13">
+                                  <span id="treeDemo_3_check" class="button chk checkbox_false_full" treenode_check=""></span>
+                                  <a id="treeDemo_3_a" class="level1" treenode_a="" onclick="" target="_blank" style="" title=" 权限添加">
+                                      <span id="treeDemo_3_ico" title="" treenode_ico="" class="button ico_docu" style=""></span>
+                                      <span id="treeDemo_3_span" class="node_name"> 权限添加</span>
+                                  </a>
+                              </li>
+                              <li id="treeDemo_4" class="level1" tabindex="0" hidefocus="true" treenode="">
+                                  <span id="treeDemo_4_switch" title="" class="button level1 switch center_docu" treenode_switch=""></span>
+                                  <input type="hidden" class="auth_id" value="14">
+                                  <span id="treeDemo_4_check" class="button chk checkbox_false_full" treenode_check=""></span>
+                                  <a id="treeDemo_4_a" class="level1" treenode_a="" onclick="" target="_blank" style="" title=" 权限编辑">
+                                      <span id="treeDemo_4_ico" title="" treenode_ico="" class="button ico_docu" style=""></span>
+                                      <span id="treeDemo_4_span" class="node_name"> 权限编辑</span>
+                                  </a>
+                              </li>
+                              <li id="treeDemo_5" class="level1" tabindex="0" hidefocus="true" treenode="">
+                                  <span id="treeDemo_5_switch" title="" class="button level1 switch center_docu" treenode_switch=""></span>
+                                  <input type="hidden" class="auth_id" value="15">
+                                  <span id="treeDemo_5_check" class="button chk checkbox_false_full" treenode_check=""></span>
+                                  <a id="treeDemo_5_a" class="level1" treenode_a="" onclick="" target="_blank" style="" title=" 权限启/停用">
+                                      <span id="treeDemo_5_ico" title="" treenode_ico="" class="button ico_docu" style=""></span>
+                                      <span id="treeDemo_5_span" class="node_name"> 权限启/停用</span></a>
+                              </li>
+                              <li id="treeDemo_6" class="level1" tabindex="0" hidefocus="true" treenode="">
+                                  <span id="treeDemo_6_switch" title="" class="button level1 switch center_docu" treenode_switch=""></span>
+                                  <input type="hidden" class="auth_id" value="16">
+                                  <span id="treeDemo_6_check" class="button chk checkbox_false_full" treenode_check=""></span>
+                                  <a id="treeDemo_6_a" class="level1" treenode_a="" onclick="" target="_blank" style="" title=" 权限单条删除">
+                                      <span id="treeDemo_6_ico" title="" treenode_ico="" class="button ico_docu" style=""></span>
+                                      <span id="treeDemo_6_span" class="node_name"> 权限单条删除</span>
+                                  </a>
+                              </li>
+                              <li id="treeDemo_7" class="level1" tabindex="0" hidefocus="true" treenode="">
+                                  <span id="treeDemo_7_switch" title="" class="button level1 switch bottom_docu" treenode_switch=""></span>
+                                  <input type="hidden" class="auth_id" value="17">
+                                  <span id="treeDemo_7_check" class="button chk checkbox_false_full" treenode_check=""></span>
+                                  <a id="treeDemo_7_a" class="level1" treenode_a="" onclick="" target="_blank" style="" title=" 权限批量删除">
+                                      <span id="treeDemo_7_ico" title="" treenode_ico="" class="button ico_docu" style=""></span>
+                                      <span id="treeDemo_7_span" class="node_name"> 权限批量删除</span>
+                                  </a>
+                              </li>
+
+
+                          </ul>
+                      </li>{% endcomment %}
+
+                  </ul>
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>
+              </div>
+          </div>
+
+          <div class="layui-form-item">
+              <button  class="layui-btn" id="role_auth_add_btn">
+                  提交
+                  <input type="hidden" value="{{ id }}" id="role_id">
+              </button>
+
+{#          隐藏域#}
+              {% for auth in auth_list %}
+                  <input type="hidden" value="{{ auth }}" class="auth_list">
+              {% endfor %}
+
+              <input type="hidden" value="{{ auth_idList }}" id="auth_idList">
+              <input type="hidden" value="{{ auth_pIdList }}" id="auth_pIdList">
+              <input type="hidden" value="{{ auth_nameList }}" id="auth_nameList">
+              <input type="hidden" value="" id="check_auth_id_list">
+            {#查询已经绑定到该角色下的权限#}
+              <input type="hidden" value="{{ permission_id_list }}" id="permission_id_list">
+
+
+
+          </div>
+    </div>
+    <script src="{% static 'js/host.js' %}"></script>
+    <script src="{% static 'js/role_auth_add.js' %}"></script>
+  <SCRIPT type="text/javascript">
+        <!--
+        var setting = {
+            view: {
+                {% comment %}addHoverDom: addHoverDom,
+                removeHoverDom: removeHoverDom,{% endcomment %}
+                selectedMulti: false
+            },
+            check: {
+                chkStyle: "checkbox",//复选框类型
+                enable: true//每个节点上是否显示 CheckBox
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            edit: {
+                enable: true
+            },
+            callback:{
+                 beforeCheck:true,
+                onCheck:onCheck
+            }
+
+        };
+        var zNodes=[];
+        var auth_idList1=document.getElementById("auth_idList").value;
+        var auth_pIdList1=document.getElementById("auth_pIdList").value;
+        var auth_nameList1=document.getElementById("auth_nameList").value;
+        var auth_idList2=auth_idList1.replace(/L/g,'');
+        var auth_pIdList2=auth_pIdList1.replace(/L/g,'');
+        var auth_nameList2=auth_nameList1.replace(/L/g,'');
+
+        var auth_idList4=auth_idList2.replace(/'/g,'');
+        var auth_pIdList4=auth_pIdList2.replace(/'/g,'');
+        var auth_nameList4=auth_nameList2.replace(/'/g,'');
+        var auth_idList=string2Array(auth_idList4);
+        var auth_pIdList=string2Array(auth_pIdList4);
+        var auth_nameList=string2Array(auth_nameList4);
+        for(var j=0;j<auth_idList.length;j++){
+            {#alert(auth_idList[j]);#}
+            {#alert(auth_pIdList[j]);#}
+            {#alert(auth_nameList[j]);#}
+
+            var auth_idList3=auth_idList[j].replace(/u/g,'');
+            var auth_pIdList3=auth_pIdList[j].replace(/u/g,'');
+            var auth_nameList3=auth_nameList[j].replace(/u/,'');
+            //unicode转中文
+            var name = eval("'" + auth_nameList3 + "'");
+            var auth_dict={
+                //权限的id
+                id:parseInt(auth_idList3),
+                //权限的父级id
+                pId:parseInt(auth_pIdList3),
+                //权限名称
+                name:name
+            };
+            zNodes.push(auth_dict);
+        }
+        console.log(zNodes);
+
+
+        $(document).ready(function(){
+
+
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+
+            zTree = $.fn.zTree.getZTreeObj("treeDemo");//treeDemo界面中加载ztree的div
+            var permission_id_list1=document.getElementById("permission_id_list").value;
+            var permission_id_list2=permission_id_list1.replace(/L/g,'');
+            var permission_id_list=string2Array(permission_id_list2);
+
+            for(var t=0;t<permission_id_list.length;t++){
+
+                var node = zTree.getNodeByParam('id',permission_id_list[t]);
+                node.checked = true;
+                zTree.updateNode(node);
+                zTree.selectNode(node,true);//将指定ID的节点选中
+                zTree.expandNode(node, true, false);//指定选中ID节点展开
+
+            }
+
+
+
+            //在jquery.ztree.core.js中1263行获取权限对应的 id
+
+        });
+        function onCheck(e,treeId,treeNode){
+            var check_auth_id_list=document.getElementById("check_auth_id_list");
+            var treeObj=$.fn.zTree.getZTreeObj("treeDemo"),
+            nodes=treeObj.getCheckedNodes(true),
+            v="";
+            ids="";
+            for(var i=0;i<nodes.length;i++){
+
+                v+=nodes[i].name + ",";
+                ids+=nodes[i].id + ",";
+                console.log("节点id:"+nodes[i].id+"节点名称"+v); //获取选中节点的值
+            }
+            {#alert(ids);#}
+            check_auth_id_list.value=ids;
+        }
+
+
+
+        // 把字符串转化为数组对象
+        function string2Array(stringObj) {
+            stringObj = stringObj.replace(/\[([\w, ]*)\]/, "$1");
+            if (stringObj.indexOf("[") == 0) {// if has chinese
+                stringObj = stringObj.substring(1, stringObj.length - 1);
+            }
+            var arr = stringObj.split(",");
+            var newArray = [];//new Array();
+            for ( var i = 0; i < arr.length; i++) {
+                var arrOne = arr[i];
+                newArray.push(arrOne);
+            }
+            // console.log(newArray);
+            return newArray;
+        }
+
+        //-->
+    </SCRIPT>
+
+  </body>
+
+</html>

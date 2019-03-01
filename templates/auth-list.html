@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+  <head>
+    <meta charset="UTF-8">
+    <title>角色管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+{#    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />#}
+    <link rel="stylesheet" href="{% static 'css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'css/xadmin.css' %}">
+    <script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/layui/layui.js' %}" charset="utf-8"></script>
+    <script type="text/javascript" src="{% static 'js/xadmin.js' %}"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+      <link rel="stylesheet" href="{% static 'sweetalert/sweetalert.css' %}">
+      <link rel="stylesheet" href="{% static 'css/iconfont.css' %}">
+      <script src="{% static 'sweetalert/sweetalert.min.js' %}"></script>
+      <script src="{% static 'sweetalert/xtalert.js' %}"></script>
+  </head>
+  
+  <body>
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">权限管理</a>
+        <a>
+          <cite>权限列表</cite></a>
+      </span>
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    </div>
+    <div class="x-body">
+      <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so">
+{#          <input class="layui-input" placeholder="开始日" name="start" id="start">#}
+{#          <input class="layui-input" placeholder="截止日" name="end" id="end">#}
+          <input type="text" name="username"  placeholder="请输入角色名" autocomplete="off" class="layui-input">
+          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+        </form>
+      </div>
+      <xblock>
+        <button class="layui-btn layui-btn-danger" id="delete_much"><i class="layui-icon"></i>批量删除</button>
+        <button class="layui-btn" onclick="x_admin_show('添加权限','{% url "auth_role:to_auth_add" %}')"><i class="layui-icon"></i>添加</button>
+        <span class="x-right" style="line-height:40px">共有数据：{{ count }}条</span>
+      </xblock>
+      <table class="layui-table">
+        <thead>
+          <tr>
+            <th>
+              <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
+            </th>
+            <th>序号</th>
+            <th>权限名称</th>
+            <th>URL名称</th>
+            <th>描述</th>
+            <th>创建时间</th>
+            <th>状态</th>
+            <th>操作</th>
+        </thead>
+        <tbody>
+        {% for auth in auth_list %}
+                <tr>
+                    <td>
+                        <input type="checkbox" class="i-checks id_list_check">
+                        <input type="hidden" value="{{auth.id}}">
+                        <input type="hidden" id="check_id_list" name="check_id_list">
+                    </td>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ auth.name }}</td>
+                    <td>{{ auth.url }}</td>
+                    <td>{{ auth.describe }}</td>
+                    <td>{{ auth.create_time| date:"Y/m/d H:i:s" }}</td>
+                    <td class="td-status">
+                        {% if auth.is_active  %}
+                            <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span>
+                        {% else %}
+                            <span class="layui-btn layui-btn-normal layui-btn-mini">已停用</span>
+                        {% endif %}
+                    </td>
+                    <td class="td-manage">
+                      {% if not auth.is_active %}
+                            <input type="hidden" value="{{ auth.is_active}}">
+                            <input type="hidden" value="{{ auth.id}}">
+                            <a title="启用" class="is_active_btn" style="cursor: pointer">
+                              <i class="layui-icon" style="font-size: 20px; color: #4fdd10;">&#xe62f;</i>
+                            </a>
+                        {% endif %}
+                        {% if auth.is_active  %}
+                            <input type="hidden" value="{{ auth.is_active}}">
+                            <input type="hidden" value="{{ auth.id}}">
+                            <a title="停用" class="is_active_btn" style="cursor: pointer">
+                              <i class="layui-icon" style="font-size: 20px; color: #dda664;">&#xe601;</i>
+                            </a>
+                        {% endif %}
+                      <a title="编辑"  onclick="x_admin_show('编辑','{% url 'auth_role:to_auth_edit' %}?id={{ auth.id }}')" href="javascript:;">
+                        <i class="layui-icon" style="font-size: 20px; color: #1E9FFF;">&#xe642;</i>
+                      </a>
+                    <input type="hidden" value="{{ auth.id}}">
+                      <a title="删除" class="delete_btn" style="cursor: pointer">
+                        <i class="layui-icon" style="font-size: 20px; color: #ff3a1e;">&#xe640;</i>
+                      </a>
+                    </td>
+                  </tr>
+
+            {% endfor %}
+
+
+        </tbody>
+      </table>
+    {#    分页#}
+      <div class="page">
+            <div>
+                {#上一页#}
+                {% if page_obj.has_previous %}
+                    <a class="prev" href="{% url 'auth_role:auth_list' %}?p={{ page_obj.previous_page_number }}"><<</a>
+                {% else %}
+                    <a class="prev" href="javascript:void(0);" style="cursor: not-allowed"><<</a>
+                {% endif %}
+                {% if left_has_more %}
+                    <a class="prev" href="{% url 'auth_role:auth_list' %}?p=1">1</a>
+                    <a class="prev" href="javascript:void(0);">...</a>
+                {% endif %}
+
+                {# 左边的页码 #}
+                {% for left_page in left_pages %}
+                    <a class="num" href="{% url 'auth_role:auth_list' %}?p={{ left_page }}">{{ left_page }}</a>
+                {% endfor %}
+                {# 当前的页码#}
+                <span class="current">{{ current_page }}</span>
+                {#<a href="{% url 'menu_manage:menu_list' %}?p={{ current_page }}" class="current">{{ current_page }}</a>#}
+
+                {# 右边的页码 #}
+                {% for right_page in right_pages %}
+                    <a class="num" href="{% url 'auth_role:auth_list' %}?p={{ right_page }}">{{ right_page }}</a>
+                {% endfor %}
+
+                {% if right_has_more %}
+                    <a class="num" href="javascript:void(0);">...</a>
+                    <a class="num" href="{% url 'auth_role:auth_list' %}?p={{ num_pages }}">{{ num_pages }}</a>
+                {% endif %}
+                {#下一页#}
+                {% if page_obj.has_next %}
+                    <a class="next" href="{% url 'auth_role:auth_list' %}?p={{ page_obj.next_page_number }}">&gt;&gt;</a>
+                {% else %}
+                    <a class="disabled next" href="javascript:void(0);" style="cursor: not-allowed">&gt;&gt;</a>
+                {% endif %}
+
+
+            </div>
+          </div>
+
+    </div>
+    <script src="{% static 'js/host.js' %}"></script>
+    <script src="{% static 'js/auth_list.js' %}"></script>
+  </body>
+
+</html>

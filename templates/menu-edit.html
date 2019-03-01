@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>菜单编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+{#    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />#}
+    <link rel="stylesheet" href="{% static 'css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'css/xadmin.css' %}">
+    <script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/layui/layui.js' %}" charset="utf-8"></script>
+    <script type="text/javascript" src="{% static 'js/xadmin.js' %}"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+      <link rel="stylesheet" href="{% static 'sweetalert/sweetalert.css' %}">
+      <script src="{% static 'sweetalert/sweetalert.min.js' %}"></script>
+      <script src="{% static 'sweetalert/xtalert.js' %}"></script>
+  </head>
+  
+  <body>
+    <div class="x-body">
+
+          <div class="layui-form-item">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>上级菜单
+              </label>
+              <div class="layui-input-inline">
+                  <select name="parent_id_edit" id="parent_id_edit">
+                    {% if parent_name != '' %}
+                        <option value="{{ parent_id }}">{{ parent_name }}</option>
+                    {% endif %}
+                  <option value="0">--无--</option>
+
+                      {% for menuManage in menuManage_list %}
+                          {% if parent_name !=  menuManage.name %}
+                              <option value="{{ menuManage.id }}">{{ menuManage.name }}</option>
+                          {% endif %}
+
+                      {% endfor %}
+                  </select>
+
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*若为一级菜单则留空</span>
+              </div>
+          </div>
+
+          <div class="layui-form-item">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>菜单名
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="name_edit" name="name_edit" required="" lay-verify="required"
+                  autocomplete="off" value="{{ name }}" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>
+              </div>
+          </div>
+
+          <div class="layui-form-item">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>菜单路径
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="path_edit" name="path_edit" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input" value="{{ path }}">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*相对路径,若为一级菜单则留空</span>
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="L_email" class="layui-form-label">
+                  <span class="x-red">*</span>菜单图标
+              </label>
+              <div class="layui-input-inline">
+                  <select name="icon_edit" id="icon_edit">
+                      <option value="">{{ icon }}</option>
+                  </select>
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label"><span class="x-red">*</span>是否启用</label>
+              <div class="layui-input-block">
+                  {% if is_active == 1 %}
+                      <input type="radio" value="1" name="is_active" id="is_active_1_edit" lay-skin="primary" title="启用" checked="">
+                      <input type="radio" value="0" name="is_active" id="is_active_0_edit" lay-skin="primary" title="停用">
+                  {% endif %}
+                  {% if is_active == 0 %}
+                      <input type="radio" value="1" name="is_active" id="is_active_1_edit" lay-skin="primary" title="启用">
+                      <input type="radio" value="0" name="is_active" id="is_active_0_edit" lay-skin="primary" title="停用" checked="">
+                  {% endif %}
+
+              </div>
+          </div>
+
+          <div class="layui-form-item">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>菜单描述
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="desc_edit" name="desc_edit" required="" lay-verify="required"
+                  autocomplete="off" value="{{ desc }}" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>
+              </div>
+          </div>
+
+          <div class="layui-form-item">
+              <button  class="layui-btn" id="menu_edit_but">
+                  提交
+                  <input type="hidden" value="{{ id }}" id="id_edit">
+              </button>
+              <button  class="layui-btn">
+                  返回
+              </button>
+          </div>
+    </div>
+
+    <script src="{% static 'js/host.js' %}"></script>
+    <script src="{% static 'js/menu-edit.js' %}"></script>
+  </body>
+
+</html>

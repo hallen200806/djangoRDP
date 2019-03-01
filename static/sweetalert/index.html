@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>sweetalert用法</title>
+	<link rel="stylesheet" href="sweetalert/sweetalert.css">
+    <script src="sweetalert/sweetalert.min.js"></script>
+    <script src="sweetalert/xtalert.js"></script>
+
+</head>
+<body>
+	<button id="btn1">错误提示</button>
+	<script>
+		var btn = document.getElementById("btn1");
+		btn.onclick = function(){
+			xtalert.alertError('不能删除板块')
+		};
+	</script>
+
+	<button id="btn2">信息提示</button>
+	<script>
+		var btn = document.getElementById("btn2");
+		btn.onclick = function(){
+			xtalert.alertInfo('您没有权限！请联系管理员');
+		};
+	</script>
+
+	<button id="btn3">成功提示</button>
+	<script>
+		var btn = document.getElementById("btn3");
+		btn.onclick = function(){
+			xtalert.alertSuccess('文章发表成功！');
+		};
+	</script>
+
+	<button id="btn4">确认按钮</button>
+	<script>
+		var btn = document.getElementById("btn4");
+		btn.onclick = function(){
+			xtalert.alertConfirm({
+				"confirmText":"再发一篇",
+				"cancelText":"回到首页",
+				"msg": "恭喜！文章发表成功！",
+				"confirmCallback": function(){
+					alert('点击了确认按钮')
+				},
+				"cancelCallback": function(){
+					alert("点击了取消按钮");
+				}
+			});
+		};
+	</script>
+
+	<button id="btn5">输入框</button>
+	<script>
+		var btn = document.getElementById("btn5");
+		btn.onclick = function(){
+			xtalert.alertOneInput({
+				"title": "提示（请输入）",
+				'text':"添加新板块",
+				"placeholder":"输入板块名称",
+				"confirmText": "确认",
+				'cancelText': "取消",
+				"confirmCallback": function(inputValue){
+					alert('输入了'+inputValue);
+				}
+			});
+		};
+	</script>
+
+	<button id="btn6">成功信息</button>
+	<script>
+		var btn = document.getElementById("btn6");
+		btn.onclick = function(){
+			xtalert.alertSuccessToast('恭喜！密码修改成功！')
+		};
+	</script>
+
+</body>
+</html>

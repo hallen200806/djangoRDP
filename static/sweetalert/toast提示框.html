@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="sweetalert/sweetalert.css">
+        <script src="sweetalert/sweetalert.min.js"></script>
+        <script src="sweetalert/xtalert.js"></script>
+        <style>
+        	button{
+        		display: block;
+        		margin-bottom: 10px;
+        	}
+        </style>
+    </head>
+    <body>
+    	<button onclick="xtalert.alertError('不能删除文章！')">错误提示</button>
+    	<button onclick="xtalert.alertInfo('您没有权限，请联系管理员！')">信息提示</button>
+    	<button onclick="xtalert.alertSuccess('恭喜您！操作成功！')">成功提示</button>
+    	<button id='confirm-btn'>确认提示</button>
+    	<script>
+    		var confirmBtn = document.getElementById('confirm-btn');
+    		confirmBtn.onclick = function(event){
+    			xtalert.alertConfirm({
+    				'msg': '恭喜！文章发表成功！是否再发一篇？',
+    				'confirmText': '再发一篇',
+    				'cancelText': '回到首页',
+    				'confirmCallback': function(){
+    					alert('点击了确认按钮');
+    				},
+    				'cancelCallback': function(){
+    					alert('点击了取消按钮');
+    				}
+    			});
+    		}
+    	</script>
+    	<button id='input-btn'>输入框提示</button>
+    	<script>
+    		var inputBtn = document.getElementById('input-btn');
+    		inputBtn.onclick = function(event){
+    			xtalert.alertOneInput({
+    				'text': '请输入板块名称',
+    				'confirmCallback': function(text){
+    					alert(text);
+    					xtalert.close();
+    				}
+    			});
+    		}
+    	</script>
+    	<button onclick="xtalert.alertNetworkError()">网络错误</button>
+    	<button onclick="xtalert.alertInfoToast('权限受限，请联系管理员！')">信息toast</button>
+    	<button onclick="xtalert.alertErrorToast('权限受限，请联系管理员！')">错误toast</button>
+    	<button onclick="xtalert.alertSuccessToast('恭喜！操作成功！')">成功toast</button>
+
+    </body>
+</html>
